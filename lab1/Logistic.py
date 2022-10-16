@@ -5,7 +5,7 @@ import matplotlib.pyplot as plt
 
 
 class LogisticRegression:
-    def __init__(self, lr, iteration, loss, epsilon=0.0001, w=[], max=[], min=[], tr_times=0):
+    def __init__(self, lr, iteration, loss, epsilon=0.00001, w=[], max=[], min=[], tr_times=0):
         self.lr = lr
         self.iteration = iteration
         self.epsilon = epsilon
@@ -51,6 +51,7 @@ class LogisticRegression:
             dl = self.grad(w, train_x, train_y)
             w = w + self.lr * dl
 
+            # if ((counter %100) == 0):
             self.lr = 0.95 * self.lr
 
             l2 = 0
@@ -59,9 +60,8 @@ class LogisticRegression:
                     np.dot(train_x[i], w)[0])
 
             self.loss.append(l2/m)
-            print(counter, l2, len(self.loss))
 
-            if abs(l2-l1) < self.epsilon and counter >= self.iteration:
+            if (abs(l2-l1) < self.epsilon) and (counter >= self.iteration):
                 break
 
             l1 = l2
